@@ -1,27 +1,219 @@
-<div id="loginSection" style="text-align: center; margin-top: 50px;">
-    <h2>Acceso al Aula Virtual</h2>
-    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 10px; border: 1px solid var(--gold); display: inline-block;">
-        <input type="text" id="userInput" placeholder="Usuario" style="display: block; margin: 10px auto; padding: 10px;">
-        <input type="password" id="passInput" placeholder="Contraseña" style="display: block; margin: 10px auto; padding: 10px;">
-        <button onclick="validarAcceso()" style="background: var(--gold); border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">INGRESAR</button>
-        <p id="errorMsg" style="color: red; display: none; margin-top: 10px;">Datos incorrectos. Intente de nuevo.</p>
-    </div>
-</div>
-
-<div id="mainContent" style="display: none;">
-    </div>
-
-<script>
-    function validarAcceso() {
-        const user = document.getElementById('userInput').value;
-        const pass = document.getElementById('passInput').value;
-        
-        // Credenciales definidas por vos
-        if (user === "cirugia" && pass === "prueba") {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
-        } else {
-            document.getElementById('errorMsg').style.display = 'block';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirugía Astral - Aula Virtual</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --text: #e0e0e0;
         }
-    }
-</script>
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        /* --- LOGIN --- */
+        #loginSection {
+            margin-top: 100px;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+        }
+
+        input {
+            display: block;
+            margin: 15px auto;
+            padding: 12px;
+            width: 250px;
+            border-radius: 5px;
+            border: 1px solid var(--gold);
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #8a6d3b, #d4af37);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        /* --- CONTENIDO --- */
+        #mainContent { display: none; width: 100%; max-width: 900px; }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .menu-item {
+            border: 1px solid var(--gold);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            background: rgba(212, 175, 55, 0.05);
+            transition: 0.3s;
+        }
+
+        .menu-item:hover { background: rgba(212, 175, 55, 0.15); }
+
+        .section { display: none; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- SIMBOLOGÍA --- */
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .symbol-card {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .symbol-card img { width: 120px; filter: drop-shadow(0 0 5px var(--gold)); margin-bottom: 10px; }
+
+        .mantra-box {
+            margin-top: 40px;
+            padding: 25px;
+            border: 1px solid var(--gold);
+            border-left: 5px solid var(--gold);
+            font-style: italic;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin: 20px 0; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .back-link { color: var(--gold); cursor: pointer; display: block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection">
+        <h1>Cirugía Astral</h1>
+        <p>Ingresa tus credenciales</p>
+        <input type="text" id="user" placeholder="Usuario">
+        <input type="password" id="pass" placeholder="Contraseña">
+        <button class="btn-gold" onclick="login()">INGRESAR</button>
+        <p id="error" style="color: #ff6b6b; display: none; margin-top: 15px;">Datos incorrectos</p>
+    </div>
+
+    <div id="mainContent">
+        <h1>AULA VIRTUAL</h1>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="TU_LINK_PDF" class="btn-gold" style="text-decoration: none;">📥 Descargar Manual Completo</a>
+        </div>
+
+        <div class="grid-menu" id="menu">
+            <div class="menu-item" onclick="show('tec')">🩹 Técnica de Sanación</div>
+            <div class="menu-item" onclick="show('sin')">📡 Sintonización</div>
+            <div class="menu-item" onclick="show('sim')">🌀 Simbología</div>
+            <div class="menu-item" onclick="show('mes')">🛠️ Mesa de Trabajo</div>
+            <div class="menu-item" onclick="show('bio')" style="grid-column: span 2;">👤 Biografía</div>
+        </div>
+
+        <div id="tec" class="section">
+            <span class="back-link" onclick="back()">← Volver al menú</span>
+            <h2>Técnica de Sanación</h2>
+            <div class="video-wrapper"><iframe src="LINK_VIDEO_TECNICA"></iframe></div>
+            <p>Sigue los pasos detallados en el video para realizar la cirugía energética.</p>
+        </div>
+
+        <div id="sin" class="section">
+            <span class="back-link" onclick="back()">← Volver al menú</span>
+            <h2>Sintonización</h2>
+            <div class="video-wrapper"><iframe src="LINK_VIDEO_SINTONIZACION"></iframe></div>
+        </div>
+
+        <div id="sim" class="section">
+            <span class="back-link" onclick="back()">← Volver al menú</span>
+            <h2>Simbología Sagrada</h2>
+            <div class="symbols-grid">
+                <div class="symbol-card"><h3>1. HAM</h3><img src="IMG_HAM"><p>Corte de lazos e implantes.</p></div>
+                <div class="symbol-card"><h3>2. DISER</h3><img src="IMG_DISER"><p>Extraer energía de baja frecuencia.</p></div>
+                <div class="symbol-card"><h3>3. SAMAIH</h3><img src="IMG_SAMAIH"><p>Renovación y vitalidad energética.</p></div>
+                <div class="symbol-card"><h3>4. ESFERA DE LUZ</h3><img src="IMG_ESFERA"><p>Sellar la zona afectada.</p></div>
+                <div class="symbol-card"><h3>5. CRISTAL ETÉRICO</h3><img src="IMG_CRISTAL"><p>Apertura del corazón.</p></div>
+                <div class="symbol-card"><h3>6. BANDA ENERGÉTICA</h3><img src="IMG_BANDA"><p>Ampliar luz en todo el cuerpo.</p></div>
+                <div class="symbol-card"><h3>7. CIELO Y TIERRA</h3><img src="IMG_CONEXION"><p>Cierre y enraizamiento.</p></div>
+            </div>
+            <div class="mantra-box">
+                <strong>Mantra de Sanación Emocional:</strong><br>
+                "Amada presencia de luz Arcturiana, pido su asistencia... [TRANSCRIPCIÓN COMPLETA]"
+            </div>
+        </div>
+
+        <div id="mes" class="section">
+            <span class="back-link" onclick="back()">← Volver al menú</span>
+            <h2>Mesa de Trabajo</h2>
+            <p>Prepara tu espacio sagrado descargando el diagrama oficial.</p>
+            <div style="text-align: center;">
+                <img src="URL_MESA_IMG" style="max-width: 100%; border: 1px solid var(--gold);">
+                <br><br>
+                <a href="URL_MESA_IMG" class="btn-gold" download>Descargar Imagen</a>
+            </div>
+        </div>
+
+        <div id="bio" class="section">
+            <span class="back-link" onclick="back()">← Volver al menú</span>
+            <h2>Mi Historia</h2>
+            <p>Hace varios años vengo en la búsqueda de mi propia sanación... [TU BIO]</p>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "cirugia" && p === "prueba") {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        function show(id) {
+            document.getElementById('menu').style.display = 'none';
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function back() {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById('menu').style.display = 'grid';
+        }
+    </script>
+</body>
+</html>
