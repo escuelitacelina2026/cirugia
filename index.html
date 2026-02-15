@@ -1,232 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cirugía Astral - Aula Virtual</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #d4af37;
-            --dark: #0a0a0a;
-            --text: #e0e0e0;
-        }
+<div id="loginSection" style="text-align: center; margin-top: 50px;">
+    <h2>Acceso al Aula Virtual</h2>
+    <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 10px; border: 1px solid var(--gold); display: inline-block;">
+        <input type="text" id="userInput" placeholder="Usuario" style="display: block; margin: 10px auto; padding: 10px;">
+        <input type="password" id="passInput" placeholder="Contraseña" style="display: block; margin: 10px auto; padding: 10px;">
+        <button onclick="validarAcceso()" style="background: var(--gold); border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;">INGRESAR</button>
+        <p id="errorMsg" style="color: red; display: none; margin-top: 10px;">Datos incorrectos. Intente de nuevo.</p>
+    </div>
+</div>
 
-        body {
-            background-color: var(--dark);
-            color: var(--text);
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        h1, h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            text-align: center;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        /* --- BOTÓN DESCARGA PDF --- */
-        .download-main {
-            background: linear-gradient(45deg, #8a6d3b, #d4af37);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            transition: 0.3s;
-        }
-
-        /* --- GRILLA PRINCIPAL --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .grid-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--gold);
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .grid-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        /* --- SECCIONES DE CONTENIDO --- */
-        .content-section {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            margin-top: 20px;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* --- GRILLA DE SIMBOLOGÍA --- */
-        .symbols-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .symbol-card {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .symbol-card img {
-            width: 100px;
-            height: 100px;
-            margin: 10px 0;
-            filter: drop-shadow(0 0 5px var(--gold));
-        }
-
-        .mantra {
-            margin-top: 40px;
-            padding: 30px;
-            border-top: 1px solid var(--gold);
-            font-style: italic;
-            text-align: center;
-            color: var(--gold);
-            font-size: 1.1em;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            margin-bottom: 20px;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        .back-btn {
-            color: var(--gold);
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>CIRUGÍA ASTRAL</h1>
-    <p style="text-align:center;">Cristal Arcturiano</p>
-
-    <a href="TU_LINK_AL_PDF" class="download-main">📥 Descargar Material en PDF</a>
-
-    <div class="grid-container" id="mainMenu">
-        <div class="grid-item" onclick="showSection('sanacion')">🩹 Técnica de Sanación</div>
-        <div class="grid-item" onclick="showSection('sintonizacion')">📡 Sintonización</div>
-        <div class="grid-item" onclick="showSection('simbologia')">🌀 Simbología</div>
-        <div class="grid-item" onclick="showSection('mesa')">🛠️ Mesa de Trabajo</div>
-        <div class="grid-item" onclick="showSection('bio')" style="grid-column: span 2;">👤 Biografía</div>
+<div id="mainContent" style="display: none;">
     </div>
 
-    <div id="sanacion" class="content-section">
-        <div class="back-btn" onclick="hideAll()">← Volver</div>
-        <h2>Técnica de Sanación</h2>
-        <div class="video-container">
-            <iframe src="TU_LINK_VIDEO_1" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <p>En este video aprenderás los movimientos fundamentales y la aplicación de la técnica paso a paso.</p>
-    </div>
-
-    <div id="simbologia" class="content-section">
-        <div class="back-btn" onclick="hideAll()">← Volver</div>
-        <h2>Simbología Sagrada</h2>
-        <div class="symbols-grid">
-            <div class="symbol-card">
-                <h3>Ham</h3>
-                <img src="URL_IMAGEN_1" alt="Ham">
-                <p>Corte de lazos, implantes o energías densas.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Diser</h3>
-                <img src="URL_IMAGEN_2" alt="Diser">
-                <p>Extraigo energía de baja frecuencia.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Samaih</h3>
-                <img src="URL_IMAGEN_3" alt="Samaih">
-                <p>Renuevo y revitalizo la energía vibratoria.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Esfera de Luz</h3>
-                <img src="URL_IMAGEN_4" alt="Esfera">
-                <p>Sellar la zona afectada para proteger la sanación.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Cristal Etérico</h3>
-                <img src="URL_IMAGEN_5" alt="Cristal">
-                <p>Apertura del corazón y flujo de amor arcturiano.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Banda Energética</h3>
-                <img src="URL_IMAGEN_6" alt="Banda">
-                <p>Amplía la luz en todo el cuerpo e integra la sanación.</p>
-            </div>
-            <div class="symbol-card">
-                <h3>Cielo y Tierra</h3>
-                <img src="URL_IMAGEN_7" alt="Conexión">
-                <p>Cierre, enraizamiento y sellado del campo áurico.</p>
-            </div>
-        </div>
-
-        <div class="mantra">
-            <p>"Amada presencia de luz Arcturiana, pido su asistencia en este momento para sanar mis emociones, para liberar todo dolor, tristeza o angustia que resida en mi ser..."</p>
-        </div>
-    </div>
-
-    <div id="mesa" class="content-section">
-        <div class="back-btn" onclick="hideAll()">← Volver</div>
-        <h2>Mesa de Trabajo</h2>
-        <p>La Mesa de Trabajo es el escenario donde ocurre la magia de la Cirugía Astral. Descargala para tenerla en tu espacio físico.</p>
-        <div style="text-align: center; margin: 20px;">
-            <img src="URL_MESA_TRABAJO" style="width:100%; max-width:400px; border: 1px solid var(--gold);">
-            <br><br>
-            <a href="URL_MESA_TRABAJO" class="download-main" download>📥 Descargar Mesa</a>
-        </div>
-    </div>
-
-    <div id="bio" class="content-section">
-        <div class="back-btn" onclick="hideAll()">← Volver</div>
-        <h2>Mi Historia</h2>
-        <p>Hace varios años vengo en la búsqueda de mi propia sanación... [Tu biografía completa aquí]</p>
-    </div>
-
-    <script>
-        function showSection(id) {
-            document.getElementById('mainMenu').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
+<script>
+    function validarAcceso() {
+        const user = document.getElementById('userInput').value;
+        const pass = document.getElementById('passInput').value;
+        
+        // Credenciales definidas por vos
+        if (user === "cirugia" && pass === "prueba") {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        } else {
+            document.getElementById('errorMsg').style.display = 'block';
         }
-
-        function hideAll() {
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(s => s.style.display = 'none');
-            document.getElementById('mainMenu').style.display = 'grid';
-        }
-    </script>
-</body>
-</html>
+    }
+</script>
